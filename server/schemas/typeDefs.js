@@ -47,7 +47,12 @@ const typeDefs = gql`
             password: String!
         ): Auth
 
-
+        addShelter(
+            name: String!
+            rating: Float
+            review: String
+            weight: Float
+        ): User
         addSleepingBag(
             name: String!
             rating: Float

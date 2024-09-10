@@ -53,6 +53,28 @@ const resolvers ={
             return {token, user}
         },
 
+        addShelter: async(parent, {name, rating, review, weight}, context) => {
+            if(!context.user)
+            {
+                throw new AuthenticationError('You need to be logged in!')
+            }
+
+            const newShelter = await Shelter.create({
+                name, 
+                rating,
+                review,
+                weight
+            })
+            
+            const updatedUser = await User.findByIdAndUpdate(
+                context.user._id,
+                { $push: {shelter: newShelter._id}},
+                { new: true }
+            ).populate('shelter').populate('sleepingBag')
+
+            return updatedUser
+        },
+
         addSleepingBag: async(parent, { name, rating, review, weight }, context)  => {
             if(!context.user ) {
                 throw new AuthenticationError('You need to be logged in!')
@@ -69,12 +91,12 @@ const resolvers ={
                 context.user._id,
                 { $push: {sleepingBag: newSleepingBag._id } },
                 { new: true }
-            )//.populate('shelter').populate('sleepingBag') // this part isn't stricly needed, but I may include it later
+            ).populate('shelter').populate('sleepingBag') // this part isn't stricly needed, but I may include it later
 
             return updatedUser
         }
 
-        
+
 
     }
 }
