@@ -87,11 +87,12 @@ const resolvers ={
                 weight
             })
 
+            // With every piece of gear needing it's own schema. there will eventually be very large string of .populate('')
             const updatedUser = await User.findByIdAndUpdate(
                 context.user._id,
                 { $push: {sleepingBag: newSleepingBag._id } },
                 { new: true }
-            ).populate('shelter').populate('sleepingBag') // this part isn't stricly needed, but I may include it later
+            ).populate('shelter').populate('sleepingBag') 
 
             return updatedUser
         }

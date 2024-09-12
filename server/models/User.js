@@ -1,6 +1,15 @@
 const { Schema, model} = require('mongoose')
 const bcrypt = require('bcrypt')
 
+
+// I think what i currently have in the schema is easier to follow than something like this:
+/* 
+    gear: [{
+    type: Schema.Types.OBjectID, ref: 'Gear
+    }],
+ */
+// and in that gear[] is everything
+
 const userSchema = new Schema({
         username: 
         {
